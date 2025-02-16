@@ -124,4 +124,15 @@ export const FILTER_OPTIONS: FilterOption[] = [
     field: 'cost_per_install',
     category: FILTER_CATEGORIES.COST
   }
-] 
+]
+
+export interface AppliedFilter {
+  filter: FilterOption
+  value: {
+    operator: string
+    value: any
+    secondValue?: any
+  }
+}
+
+export type FilterOperator = 'equals' | 'contains' | 'greater' | 'less' | 'between' | 'in' 

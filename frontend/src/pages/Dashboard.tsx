@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Header } from "@/components/layout/Header"
 import { FilterButton } from "@/components/filters/FilterButton"
 import { FilterTabs } from "@/components/filters/FilterTabs"
@@ -6,7 +6,11 @@ import { SearchBar } from "@/components/filters/SearchBar"
 import { FilterOptions } from "@/components/filters/FilterOptions"
 import { DateRange } from "@/components/filters/DateRange"
 import { DataTable } from '@/components/table/DataTable'
-import { FILTER_CATEGORIES, FilterCategory } from "@/types/filters"
+import { FILTER_CATEGORIES, FilterCategory, FilterOption, AppliedFilter } from "@/types/filters"
+import { FilterValueInput } from '@/components/filters/FilterValueInput'
+import { AppliedFilters } from '@/components/filters/AppliedFilters'
+import { FILTER_OPTIONS } from '@/types/filters'
+import reportData from '@/assets/report.json'
 
 /**
  * Main dashboard page component that manages the filter interface
@@ -14,17 +18,70 @@ import { FILTER_CATEGORIES, FilterCategory } from "@/types/filters"
 export default function Dashboard() {
   // State management
   const [isOpen, setIsOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<FilterCategory>(FILTER_CATEGORIES.PERFORMANCE)
+  const [activeTab, setActiveTab] = useState<FilterCategory>(FILTER_CATEGORIES.GENERAL)
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([])
+  const [selectedFilter, setSelectedFilter] = useState<FilterOption | null>(null)
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([])
+
+  // Filter the data based on applied filters
+  const filteredData = useMemo(() => {
+    return reportData.filter(row => {
+      return appliedFilters.every(filter => {
+        const value = row[filter.filter.field as keyof typeof row]
+        const filterValue = filter.value
+
+        switch (filterValue.operator) {
+          case 'equals':
+            return value?.toString().toLowerCase() === filterValue.value.toString().toLowerCase()
+          
+          case 'contains':
+            if (filter.filter.field === 'tags') {
+              // Special handling for tags
+              const tags = JSON.stringify(value).toLowerCase()
+              return tags.includes(filterValue.value.toLowerCase())
+            }
+            return value?.toString().toLowerCase().includes(filterValue.value.toLowerCase())
+          
+          case 'greater':
+            return Number(value) > Number(filterValue.value)
+          
+          case 'less':
+            return Number(value) < Number(filterValue.value)
+          
+          case 'between':
+            const num = Number(value)
+            return num >= Number(filterValue.value) && num <= Number(filterValue.secondValue)
+          
+          default:
+            return true
+        }
+      })
+    })
+  }, [appliedFilters])
 
   const handleFilterSelect = (filterId: string) => {
-    setSelectedFilters(prev => {
-      if (prev.includes(filterId)) {
-        return prev.filter(id => id !== filterId)
-      }
-      return [...prev, filterId]
-    })
+    const filter = FILTER_OPTIONS.find(f => f.id === filterId)
+    if (filter) {
+      setSelectedFilter(filter)
+    }
+  }
+
+  const handleFilterValueChange = (value: any) => {
+    if (selectedFilter) {
+      setAppliedFilters(prev => [
+        ...prev,
+        {
+          filter: selectedFilter,
+          value
+        }
+      ])
+      setSelectedFilter(null)
+      setIsOpen(false)
+    }
+  }
+
+  const handleRemoveFilter = (filterId: string) => {
+    setAppliedFilters(prev => prev.filter(f => f.filter.id !== filterId))
   }
 
   return (
@@ -36,35 +93,61 @@ export default function Dashboard() {
           {/* Filter Controls */}
           <div className="flex items-center gap-3 mb-4">
             <DateRange />
-            <div className="relative ">
+            <div className="relative">
               <FilterButton onClick={() => setIsOpen(!isOpen)} />
               
               {/* Filter Dropdown */}
               {isOpen && (
-                <div className="absolute left-0 top-[calc(100%+4px)] w-[320px] p-3 bg-white rounded-md border border-gray-200 shadow-lg z-10">
-                  <SearchBar 
-                    value={searchQuery}
-                    onChange={setSearchQuery}
-                  />
-                  <FilterTabs 
-                    activeTab={activeTab}
-                    onTabChange={setActiveTab}
-                  />
-                  <FilterOptions 
-                    activeTab={activeTab}
-                    searchQuery={searchQuery}
-                    onSelect={handleFilterSelect}
-                    selectedFilters={selectedFilters}
-                  />
+                <div className="absolute left-0 top-[calc(100%+4px)] w-[320px] bg-white rounded-md border border-gray-200 shadow-lg z-10">
+                  {selectedFilter ? (
+                    <div className="p-3">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-medium">{selectedFilter.label}</h3>
+                        <button 
+                          onClick={() => setSelectedFilter(null)}
+                          className="text-gray-400 hover:text-gray-500"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                      <FilterValueInput
+                        filter={selectedFilter}
+                        onValueChange={handleFilterValueChange}
+                      />
+                    </div>
+                  ) : (
+                    <div className="p-3">
+                      <SearchBar 
+                        value={searchQuery}
+                        onChange={setSearchQuery}
+                      />
+                      <FilterTabs 
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                      />
+                      <FilterOptions 
+                        activeTab={activeTab}
+                        searchQuery={searchQuery}
+                        onSelect={handleFilterSelect}
+                        selectedFilters={appliedFilters.map(f => f.filter.id)}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           </div>
+
+          {/* Applied Filters */}
+          <AppliedFilters 
+            filters={appliedFilters}
+            onRemove={handleRemoveFilter}
+          />
         </div>
         
-        {/* Add the DataTable */}
+        {/* DataTable */}
         <div className="mt-6">
-          <DataTable />
+          <DataTable data={filteredData} />
         </div>
       </div>
     </div>

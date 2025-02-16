@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Dialog } from '@/components/ui/Dialog'
-import reportData from '@/assets/report.json'
 
 interface TagsDialogProps {
   tags: Record<string, any>
@@ -8,24 +7,9 @@ interface TagsDialogProps {
   onClose: () => void
 }
 
-interface ReportDataItem {
-  creative_id: string
-  creative_name: string
-  tags: Record<string, any> | null
-  country: string
-  ad_network: string
-  os: string
-  campaign: string
-  ad_group: string
-  ipm: string
-  ctr: string
-  spend: number
-  impressions: number
-  clicks: number
-  cpm: string
-  cost_per_click: number
-  cost_per_install: string
-  installs: number
+
+interface DataTableProps {
+  data: any[]
 }
 
 /**
@@ -205,7 +189,7 @@ function TagsDialog({ tags, isOpen, onClose }: TagsDialogProps) {
 /**
  * DataTable component to display report data
  */
-export function DataTable() {
+export function DataTable({ data }: DataTableProps) {
   const [selectedTags, setSelectedTags] = useState<Record<string, any> | null>(null)
 
   // Define column order to match JSON structure
@@ -253,7 +237,7 @@ export function DataTable() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {(reportData as ReportDataItem[]).map((row, index) => (
+          {data.map((row, index) => (
             <tr 
               key={index}
               className="hover:bg-gray-50"
