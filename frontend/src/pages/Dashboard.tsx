@@ -25,35 +25,33 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white p-6">
+    <div className="min-h-screen bg-white">
       <Header />
+      
+      <div className="p-6">
+        <div className="max-w-3xl mx-auto">
+          <FilterButton onClick={() => setIsOpen(!isOpen)} />
 
-      {/* Main Content */}
-      <div className="max-w-3xl mx-auto">
-        <FilterButton onClick={() => setIsOpen(!isOpen)} />
-
-        {/* Filter Dropdown */}
-        {isOpen && (
-          <div className="mt-2 p-4 bg-white rounded-lg shadow-lg border">
-            <AddFilterButton onClick={handleAddFilter} />
-
-            <SearchBar 
-              value={searchQuery}
-              onChange={setSearchQuery}
-            />
-
-            <FilterTabs 
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-            />
-
-            <FilterOptions 
-              options={filterOptions}
-              searchQuery={searchQuery}
-            />
-          </div>
-        )}
+          {/* Filter Dropdown */}
+          {isOpen && (
+            <div className="mt-2 p-4 bg-white rounded-lg shadow-lg border">
+              <AddFilterButton onClick={handleAddFilter} />
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+              />
+              <FilterTabs 
+                tabs={tabs}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+              />
+              <FilterOptions 
+                options={filterOptions}
+                searchQuery={searchQuery}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
