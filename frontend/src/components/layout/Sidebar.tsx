@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { mainNavItems, metricNavItems } from '@/constants/navigation'
+import { mainNavItems, metricNavItems } from '@/types/navigation'
 import * as Icons from 'lucide-react'
 import { Plus } from 'lucide-react'
 import segwiseLogo from '@/assets/segwise_ai_logo.jpg'

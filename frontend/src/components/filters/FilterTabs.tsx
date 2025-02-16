@@ -1,27 +1,29 @@
 import { cn } from "@/lib/utils"
+import { FILTER_CATEGORIES, FilterCategory } from "@/types/filters"
 
 interface FilterTabsProps {
-  tabs: string[]
-  activeTab: string
-  onTabChange: (tab: string) => void
+  activeTab: FilterCategory
+  onTabChange: (tab: FilterCategory) => void
 }
 
 /**
  * Navigation tabs for different filter categories
  */
-export function FilterTabs({ tabs, activeTab, onTabChange }: FilterTabsProps) {
+export function FilterTabs({ activeTab, onTabChange }: FilterTabsProps) {
   return (
     <div className="flex gap-4 border-b mb-4">
-      {tabs.map((tab) => (
+      {Object.values(FILTER_CATEGORIES).map((category) => (
         <button
-          key={tab}
-          onClick={() => onTabChange(tab)}
+          key={category}
+          onClick={() => onTabChange(category)}
           className={cn(
-            "pb-2 px-1",
-            activeTab === tab ? "border-b-2 border-gray-800 text-gray-900 font-medium" : "text-gray-500",
+            "pb-2 px-1 text-sm",
+            activeTab === category 
+              ? "border-b-2 border-darkgreen text-gray-900 font-medium" 
+              : "text-gray-500 hover:text-gray-700"
           )}
         >
-          {tab}
+          {category}
         </button>
       ))}
     </div>
