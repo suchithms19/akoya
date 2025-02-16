@@ -14,7 +14,7 @@ export interface NavItem {
 export const mainNavItems: NavItem[] = [
   {
     title: 'Home',
-    path: '/',
+    path: '/home',
     icon: 'home',
     section: 'main'
   },
