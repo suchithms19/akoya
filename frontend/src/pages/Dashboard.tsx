@@ -5,6 +5,7 @@ import { FilterTabs } from "@/components/filters/FilterTabs"
 import { SearchBar } from "@/components/filters/SearchBar"
 import { FilterOptions } from "@/components/filters/FilterOptions"
 import { AddFilterButton } from "@/components/filters/AddFilterButton"
+import { DateRange } from "@/components/filters/DateRange"
 
 /**
  * Main dashboard page component that manages the filter interface
@@ -29,28 +30,34 @@ export default function Dashboard() {
       <Header />
       
       <div className="p-6">
-        <div className="max-w-3xl mx-auto">
-          <FilterButton onClick={() => setIsOpen(!isOpen)} />
-
-          {/* Filter Dropdown */}
-          {isOpen && (
-            <div className="mt-2 p-4 bg-white rounded-lg shadow-lg border">
-              <AddFilterButton onClick={handleAddFilter} />
-              <SearchBar 
-                value={searchQuery}
-                onChange={setSearchQuery}
-              />
-              <FilterTabs 
-                tabs={tabs}
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-              />
-              <FilterOptions 
-                options={filterOptions}
-                searchQuery={searchQuery}
-              />
+        <div>
+          {/* Filter Controls */}
+          <div className="flex items-center gap-3 mb-4">
+            <DateRange />
+            <div className="relative">
+              <FilterButton onClick={() => setIsOpen(!isOpen)} />
+              
+              {/* Filter Dropdown */}
+              {isOpen && (
+                <div className="absolute left-0  top-11 w-[320px] p-3 bg-white rounded-md border border-gray-200 shadow-lg z-10">
+                  <AddFilterButton onClick={handleAddFilter} />
+                  <SearchBar 
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                  />
+                  <FilterTabs 
+                    tabs={tabs}
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                  />
+                  <FilterOptions 
+                    options={filterOptions}
+                    searchQuery={searchQuery}
+                  />
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

@@ -50,7 +50,7 @@ export function Header() {
       </header>
 
       {/* Title Section */}
-      <div className="px-6 py-8 bg-white border-b">
+      <div className="px-6 py-16 bg-white border-b">
         <div className="flex items-center gap-3 mb-2">
           <FileText className="h-6 w-6 text-gray-900" />
           <h1 className="text-3xl font-semibold text-gray-900">
