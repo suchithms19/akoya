@@ -20,12 +20,12 @@ export function Header() {
               Updated 8 hours ago
             </span>
             <button className="p-1.5 hover:bg-gray-100 rounded-md ">
-              <RotateCw className="h-4 w-4 text-gray-700 stroke-[2]" />
+              <RotateCw className="h-5 w-4 text-gray-700 stroke-[2]" />
             </button>
           </div>
 
           {/* Divider */}
-          <div className="h-4 w-px bg-gray-200"></div>
+          <div className="h-4 w-px bg-gray-400"></div>
 
           {/* Meta selector */}
           <button className="flex items-center gap-1 px-3 py-1 text-sm font-medium text-gray-700 bg-white hover:bg-gray-200 rounded-md border border-gray-300 ">

@@ -6,6 +6,7 @@ import { SearchBar } from "@/components/filters/SearchBar"
 import { FilterOptions } from "@/components/filters/FilterOptions"
 import { AddFilterButton } from "@/components/filters/AddFilterButton"
 import { DateRange } from "@/components/filters/DateRange"
+import { DataTable } from '@/components/table/DataTable'
 
 /**
  * Main dashboard page component that manages the filter interface
@@ -58,6 +59,11 @@ export default function Dashboard() {
               )}
             </div>
           </div>
+        </div>
+        
+        {/* Add the DataTable */}
+        <div className="mt-6">
+          <DataTable />
         </div>
       </div>
     </div>
