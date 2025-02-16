@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FilterOption } from '@/types/filters'
+import { Info } from "lucide-react"
 
 interface FilterValueInputProps {
   filter: FilterOption
@@ -88,22 +89,26 @@ export function FilterValueInput({ filter, onValueChange }: FilterValueInputProp
     switch (filterValue.operator) {
       case 'between':
         return (
-          <div className="flex items-center gap-2">
-            <input
-              type={isNumeric ? 'number' : 'text'}
-              placeholder="Min"
-              value={filterValue.value}
-              onChange={(e) => handleValueChange(e.target.value)}
-              className="flex-1 px-3 py-1 border rounded-md text-sm"
-            />
-            <span className="text-gray-500">to</span>
-            <input
-              type={isNumeric ? 'number' : 'text'}
-              placeholder="Max"
-              value={filterValue.secondValue || ''}
-              onChange={(e) => handleValueChange(e.target.value, true)}
-              className="flex-1 px-3 py-1 border rounded-md text-sm"
-            />
+          <div className="flex items-center gap-2 w-full">
+            <div className="flex-1 min-w-0">
+              <input
+                type={isNumeric ? 'number' : 'text'}
+                placeholder="Min"
+                value={filterValue.value}
+                onChange={(e) => handleValueChange(e.target.value)}
+                className="w-full px-3 py-1 border rounded-md text-sm"
+              />
+            </div>
+            <span className="text-gray-500 flex-shrink-0">to</span>
+            <div className="flex-1 min-w-0">
+              <input
+                type={isNumeric ? 'number' : 'text'}
+                placeholder="Max"
+                value={filterValue.secondValue || ''}
+                onChange={(e) => handleValueChange(e.target.value, true)}
+                className="w-full px-3 py-1 border rounded-md text-sm"
+              />
+            </div>
           </div>
         )
 
@@ -174,6 +179,11 @@ export function FilterValueInput({ filter, onValueChange }: FilterValueInputProp
       >
         Apply Filter
       </button>
+      {/* Search Hint */}
+      <div className="flex items-center gap-2 px-4 py-2 mt-2 bg-gray-50 text-xs text-gray-500 border-t">
+        <Info className="h-3 w-3" />
+        <span>Tip: Spaces affect filter results</span>
+      </div>
     </div>
   )
 } 

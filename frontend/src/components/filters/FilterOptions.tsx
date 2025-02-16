@@ -1,5 +1,6 @@
 import { FILTER_OPTIONS, FilterCategory } from "@/types/filters"
 import { cn } from "@/lib/utils"
+import { Info } from "lucide-react"
 
 interface FilterOptionsProps {
   activeTab: FilterCategory
@@ -46,33 +47,41 @@ export function FilterOptions({
   }
 
   return (
-    <div className="space-y-1 max-h-[400px] overflow-y-auto">
-      {filteredOptions.map((option, index) => {
-        const isSelected = selectedFilters.includes(option.id)
+    <div className="flex flex-col h-full">
+      <div className="space-y-1 max-h-[300px] overflow-y-auto">
+        {filteredOptions.map((option, index) => {
+          const isSelected = selectedFilters.includes(option.id)
+          
+          return (
+            <div key={option.id}>
+              {searchQuery && renderCategoryLabel(option.category, index)}
+              <button
+                onClick={() => onSelect(option.id)}
+                className={cn(
+                  "w-full text-left px-4 py-2 rounded-md text-sm transition-colors",
+                  isSelected 
+                    ? "bg-lightgreen text-darkgreen font-medium" 
+                    : "text-gray-700 hover:bg-gray-50"
+                )}
+              >
+                {option.label}
+              </button>
+            </div>
+          )
+        })}
         
-        return (
-          <div key={option.id}>
-            {searchQuery && renderCategoryLabel(option.category, index)}
-            <button
-              onClick={() => onSelect(option.id)}
-              className={cn(
-                "w-full text-left px-4 py-2 rounded-md text-sm transition-colors",
-                isSelected 
-                  ? "bg-lightgreen text-darkgreen font-medium" 
-                  : "text-gray-700 hover:bg-gray-50"
-              )}
-            >
-              {option.label}
-            </button>
+        {filteredOptions.length === 0 && (
+          <div className="text-sm text-gray-500 text-center py-4">
+            No matching filters found
           </div>
-        )
-      })}
-      
-      {filteredOptions.length === 0 && (
-        <div className="text-sm text-gray-500 text-center py-4">
-          No matching filters found
-        </div>
-      )}
+        )}
+      </div>
+
+      {/* Search Hint */}
+      <div className="flex items-center gap-2 px-4 py-2 mt-2 bg-gray-50 text-xs text-gray-500 border-t">
+        <Info className="h-3 w-3" />
+        <span>Tip: Spaces affect filter results</span>
+      </div>
     </div>
   )
 } 

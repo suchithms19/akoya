@@ -41,7 +41,7 @@ export function AppliedFilters({ filters, onRemove }: AppliedFiltersProps) {
       {filters.map((filter) => (
         <div
           key={filter.filter.id}
-          className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm"
+          className="flex items-center gap-2 px-3 py-1 bg-lightgreen rounded-full text-sm"
         >
           <span>{getFilterDisplay(filter)}</span>
           <button
