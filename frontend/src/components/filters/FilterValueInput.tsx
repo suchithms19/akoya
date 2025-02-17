@@ -35,13 +35,16 @@ interface FilterValue {
  */
 export function FilterValueInput({ filter, onValueChange }: FilterValueInputProps) {
   const [filterValue, setFilterValue] = useState<FilterValue>({
-    operator: 'equals',
+    operator: filter.field === 'tags' ? 'contains' : 'equals',
     value: ''
   })
 
   // Determine available operators based on field type
   const getOperators = (field: string): Operator[] => {
     switch (field) {
+      case 'tags':
+        return ['contains']
+      
       case 'creative_id':
       case 'creative_name':
       case 'country':
@@ -50,9 +53,6 @@ export function FilterValueInput({ filter, onValueChange }: FilterValueInputProp
       case 'campaign':
       case 'ad_group':
         return ['equals', 'contains']
-      
-      case 'tags':
-        return ['contains']
       
       case 'ipm':
       case 'ctr':
