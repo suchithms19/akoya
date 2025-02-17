@@ -12,7 +12,7 @@ const LandingPage = () => {
         <Link to="https://www.segwise.ai/" className="flex items-center gap-2">
           <img 
             src={segwiseLogo} 
-            alt="Segwise AI" 
+            alt="Segwise AI logo" 
             className="h-12 w-12 rounded"
           />
           <span className="text-2xl font-bold text-darkgreen">Segwise</span>

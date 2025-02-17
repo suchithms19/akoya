@@ -1,6 +1,9 @@
 import { ChevronUp, ChevronDown, ArrowUpDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+/**
+ * Props for the TableHeader component
+ */
 interface TableHeaderProps {
   columnOrder: string[]
   sortConfig: {
@@ -10,6 +13,9 @@ interface TableHeaderProps {
   onSort: (key: string) => void
 }
 
+/**
+ * Header component for the data table with sorting functionality
+ */
 export function TableHeader({ columnOrder, sortConfig, onSort }: TableHeaderProps) {
   return (
     <thead className="bg-gray-50">

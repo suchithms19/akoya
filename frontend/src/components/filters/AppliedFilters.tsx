@@ -1,6 +1,9 @@
 import { X } from 'lucide-react'
 import { FilterOption } from '@/types/filters'
 
+/**
+ * Represents a filter that has been applied to the data
+ */
 interface AppliedFilter {
   filter: FilterOption
   value: {
@@ -10,6 +13,9 @@ interface AppliedFilter {
   }
 }
 
+/**
+ * Props for the AppliedFilters component
+ */
 interface AppliedFiltersProps {
   filters: AppliedFilter[]
   onRemove: (filterId: string) => void
@@ -17,6 +23,8 @@ interface AppliedFiltersProps {
 
 /**
  * Component to display and manage applied filters
+ * Shows active filters as chips with remove buttons
+ * Formats filter values based on their operator type
  */
 export function AppliedFilters({ filters, onRemove }: AppliedFiltersProps) {
   const getFilterDisplay = (filter: AppliedFilter) => {

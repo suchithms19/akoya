@@ -2,18 +2,24 @@ import { X, Tag } from 'lucide-react'
 import { Dialog } from '@/components/ui/Dialog'
 import { motion, AnimatePresence } from 'framer-motion'
 
+/**
+ * Props for the FullDetailsDialog component
+ */
 interface FullDetailsDialogProps {
   data: Record<string, any>
   isOpen: boolean
   onClose: () => void
 }
 
+/**
+ * Color mapping for different metric types
+ */
 type ColorMap = {
   [key: string]: string
 }
 
 /**
- * A full-screen dialog showing all details of a row
+ * Full-screen dialog component that shows detailed information about a row
  */
 export function FullDetailsDialog({ data, isOpen, onClose }: FullDetailsDialogProps) {
   // Group metrics by category
@@ -206,7 +212,7 @@ export function FullDetailsDialog({ data, isOpen, onClose }: FullDetailsDialogPr
       )
     }
 
-    // Regular tags rendering with improved styling
+    // Regular tags rendering 
     return (
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

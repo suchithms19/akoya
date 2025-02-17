@@ -4,17 +4,33 @@ import { TableHeader } from './TableHeader'
 import { RowPreview } from './RowPreview'
 import { FullDetailsDialog } from './FullDetailsDialog'
 
+/**
+ * Props for the DataTable component
+ */
 interface DataTableProps {
   data: any[]
   searchQuery: string
   onSearchChange: (value: string) => void
 }
 
+/**
+ * Configuration for table sorting
+ */
 type SortConfig = {
   key: string
   direction: 'asc' | 'desc'
 } | null
 
+/**
+ * Main data table component that displays and manages tabular data
+ * Features:
+ * - Sortable columns
+ * - Search functionality
+ * - Row preview on click
+ * - Full details dialog
+ * - Tags viewing
+ * - Empty state handling
+ */
 export function DataTable({ data, searchQuery }: DataTableProps) {
   const [selectedTags, setSelectedTags] = useState<Record<string, any> | null>(null)
   const [sortConfig, setSortConfig] = useState<SortConfig>(null)

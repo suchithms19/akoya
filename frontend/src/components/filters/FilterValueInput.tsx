@@ -2,13 +2,22 @@ import { useState } from 'react'
 import { FilterOption } from '@/types/filters'
 import { Info } from "lucide-react"
 
+/**
+ * Props for the FilterValueInput component
+ */
 interface FilterValueInputProps {
   filter: FilterOption
   onValueChange: (value: any) => void
 }
 
+/**
+ * Type for supported filter operators
+ */
 type Operator = 'equals' | 'contains' | 'greater' | 'less' | 'between' | 'in'
 
+/**
+ * Filter value configuration
+ */
 interface FilterValue {
   operator: Operator
   value: any
@@ -16,7 +25,13 @@ interface FilterValue {
 }
 
 /**
- * Input component for filter values based on field type
+ * Component for configuring filter values and operators
+ * Features:
+ * - Dynamic operator selection based on field type
+ * - Single/dual value inputs based on operator
+ * - Numeric input handling
+ * - Validation and error prevention
+ * - Real-time value updates
  */
 export function FilterValueInput({ filter, onValueChange }: FilterValueInputProps) {
   const [filterValue, setFilterValue] = useState<FilterValue>({
@@ -179,7 +194,7 @@ export function FilterValueInput({ filter, onValueChange }: FilterValueInputProp
       >
         Apply Filter
       </button>
-      {/* Search Hint */}
+      {/* Search Hint For Users */}
       <div className="flex items-center gap-2 px-4 py-2 mt-2 bg-gray-50 text-xs text-gray-500 border-t">
         <Info className="h-3 w-3" />
         <span>Tip: Spaces affect filter results</span>

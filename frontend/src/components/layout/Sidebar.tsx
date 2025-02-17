@@ -40,7 +40,7 @@ export function Sidebar() {
         <Link to="/" className="flex items-center gap-2">
           <img 
             src={segwiseLogo} 
-            alt="Segwise AI" 
+            alt="Segwise AI logo" 
             className="h-8 w-8 rounded"
           />
           <span className="text-xl font-bold text-darkgreen">Segwise</span>

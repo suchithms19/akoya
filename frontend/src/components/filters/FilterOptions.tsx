@@ -2,6 +2,9 @@ import { FILTER_OPTIONS, FilterCategory } from "@/types/filters"
 import { cn } from "@/lib/utils"
 import { Info } from "lucide-react"
 
+/**
+ * Props for the FilterOptions component
+ */
 interface FilterOptionsProps {
   activeTab: FilterCategory
   searchQuery: string
@@ -10,7 +13,13 @@ interface FilterOptionsProps {
 }
 
 /**
- * List of filterable options that can be selected
+ * Component that displays a list of available filter options
+ * Features:
+ * - Shows options based on active category tab
+ * - Filters options based on search query
+ * - Highlights selected filters
+ * - Groups by category when searching
+ * - Sorts options alphabetically
  */
 export function FilterOptions({ 
   activeTab, 
@@ -77,7 +86,7 @@ export function FilterOptions({
         )}
       </div>
 
-      {/* Search Hint */}
+      {/* Search Hint For Users */}
       <div className="flex items-center gap-2 px-4 py-2 mt-2 bg-gray-50 text-xs text-gray-500 border-t">
         <Info className="h-3 w-3" />
         <span>Tip: Spaces affect filter results</span>

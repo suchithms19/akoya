@@ -1,6 +1,9 @@
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 
+/**
+ * Props for the Dialog component
+ */
 interface DialogProps {
   children: React.ReactNode
   open?: boolean
@@ -8,7 +11,7 @@ interface DialogProps {
 }
 
 /**
- * Dialog component using Radix UI
+ * Base dialog component built on Radix UI Dialog primitive
  */
 export function Dialog({ children, open, onOpenChange }: DialogProps) {
   return (

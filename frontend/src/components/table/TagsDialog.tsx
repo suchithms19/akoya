@@ -1,12 +1,18 @@
 import React from 'react'
 import { Dialog } from '@/components/ui/Dialog'
 
+/**
+ * Props for the TagsDialog component
+ */
 interface TagsDialogProps {
   tags: Record<string, any>
   isOpen: boolean
   onClose: () => void
 }
 
+/**
+ * Dialog component that displays creative tags in an organized format
+ */
 export function TagsDialog({ tags, isOpen, onClose }: TagsDialogProps) {
   const isTestCreative = (tags: any) => {
     return Array.isArray(tags.Concepts) || Array.isArray(tags.Audio)

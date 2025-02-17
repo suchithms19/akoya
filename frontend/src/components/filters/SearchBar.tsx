@@ -1,12 +1,15 @@
 import { Search } from "lucide-react"
 
+/**
+ * Props for the SearchBar component
+ */
 interface SearchBarProps {
   value: string
   onChange: (value: string) => void
 }
 
 /**
- * Search input for filtering options
+ * Search input component with icon
  */
 export function SearchBar({ value, onChange }: SearchBarProps) {
   return (

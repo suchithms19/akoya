@@ -14,7 +14,12 @@ import reportData from '@/assets/report.json'
 import { Search } from "lucide-react"
 
 /**
- * Main dashboard page component that manages the filter interface
+ * Main dashboard page component
+ * Features:
+ * - Data filtering and search
+ * - Date range selection
+ * - Tabular data display
+ * - Filter management
  */
 export default function Dashboard() {
   // State management
@@ -25,7 +30,9 @@ export default function Dashboard() {
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilter[]>([])
   const [tableSearchQuery, setTableSearchQuery] = useState("")
 
-  // Filter the data based on applied filters first
+  /**
+   * Filters data based on applied filters
+   */
   const filteredData = useMemo(() => {
     return reportData.filter(row => {
       return appliedFilters.every(filter => {
@@ -61,6 +68,9 @@ export default function Dashboard() {
     })
   }, [appliedFilters])
 
+  /**
+   * Handles filter selection
+   */
   const handleFilterSelect = (filterId: string) => {
     const filter = FILTER_OPTIONS.find(f => f.id === filterId)
     if (filter) {
@@ -68,6 +78,9 @@ export default function Dashboard() {
     }
   }
 
+  /**
+   * Handles filter value changes
+   */
   const handleFilterValueChange = (value: any) => {
     if (selectedFilter) {
       setAppliedFilters(prev => [
@@ -82,6 +95,9 @@ export default function Dashboard() {
     }
   }
 
+  /**
+   * Handles filter removal
+   */
   const handleRemoveFilter = (filterId: string) => {
     setAppliedFilters(prev => prev.filter(f => f.filter.id !== filterId))
   }
